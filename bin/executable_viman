@@ -1,0 +1,55 @@
+#! /bin/bash
+
+_cmd=`basename $0`
+
+Usage()
+{
+	echo "usage: $_cmd [-a] [-h]
+-a	: offer all files found (def: just files with '/man' in substring
+-h	: print this help"
+	exit 0;
+}
+
+GREP="grep /man";
+
+# filter out some options, it may come in handy
+while getopts "ah" i
+do
+	case $i in
+		a) GREP="grep /";;
+		h) Usage;;
+		*) echo "unknown option $i"
+			Usage;;
+	esac
+done     
+
+select choice in `locate $* | $GREP`
+do
+	[ -z "$choice" ] && choice=$REPLY
+	break;
+done
+
+_out=`basename $choice`
+
+#echo "checking $_out from $choice"
+
+case `file -b $choice | awk '/^/ { print $1 }'` in
+	gzip)
+#		_outfile=`echo $_out | sed 's/.gz$//'`
+#		echo "gonna write to $_outfile"
+		zcat $choice | nroff -man | sed 's/.//g' | vim -
+		;;
+	troff)
+#		_outfile=`echo $_out | sed 's/.gz$//'`
+		nroff -man $choice | sed 's/.//g' | vim -
+		;;
+	symbolic)
+		_tmp=`file -b $choice | awk '/^/ { print $4 }'`
+		if [ ! -f $_tmp ]; then
+			_tmp=`dirname $choice`/$_tmp
+		fi
+		zcat $_tmp | nroff -man | sed 's/.//g' | vim -
+		;;
+	*) echo "unknown file type `file -b $choice`, sorry"
+		exit 1;;
+esac

@@ -1,0 +1,210 @@
+# Bash knows 3 diferent shells: normal shell, interactive shell, login shell.
+# ~/.bashrc is read for interactive shells and ~/.profile is read for login
+# shells. We just let ~/.profile also read ~/.bashrc and put everything in
+# ~/.bashrc.
+
+test -z "$PROFILEREAD" && . /etc/profile
+
+# Colours
+
+# Reset
+Color_Off="\[\033[0m\]"       # Text Reset
+
+# Regular Colors
+Black="\[\033[0;30m\]"        # Black
+Red="\[\033[0;31m\]"          # Red
+Green="\[\033[0;32m\]"        # Green
+Yellow="\[\033[0;33m\]"       # Yellow
+Blue="\[\033[0;34m\]"         # Blue
+Purple="\[\033[0;35m\]"       # Purple
+Cyan="\[\033[0;36m\]"         # Cyan
+White="\[\033[0;37m\]"        # White
+
+# Bold
+BBlack="\[\033[1;30m\]"       # Black
+BRed="\[\033[1;31m\]"         # Red
+BGreen="\[\033[1;32m\]"       # Green
+BYellow="\[\033[1;33m\]"      # Yellow
+BBlue="\[\033[1;34m\]"        # Blue
+BPurple="\[\033[1;35m\]"      # Purple
+BCyan="\[\033[1;36m\]"        # Cyan
+BWhite="\[\033[1;37m\]"       # White
+
+# Underline
+UBlack="\[\033[4;30m\]"       # Black
+URed="\[\033[4;31m\]"         # Red
+UGreen="\[\033[4;32m\]"       # Green
+UYellow="\[\033[4;33m\]"      # Yellow
+UBlue="\[\033[4;34m\]"        # Blue
+UPurple="\[\033[4;35m\]"      # Purple
+UCyan="\[\033[4;36m\]"        # Cyan
+UWhite="\[\033[4;37m\]"       # White
+
+# Background
+On_Black="\[\033[40m\]"       # Black
+On_Red="\[\033[41m\]"         # Red
+On_Green="\[\033[42m\]"       # Green
+On_Yellow="\[\033[43m\]"      # Yellow
+On_Blue="\[\033[44m\]"        # Blue
+On_Purple="\[\033[45m\]"      # Purple
+On_Cyan="\[\033[46m\]"        # Cyan
+On_White="\[\033[47m\]"       # White
+
+# High Intensity
+IBlack="\[\033[0;90m\]"       # Black
+IRed="\[\033[0;91m\]"         # Red
+IGreen="\[\033[0;92m\]"       # Green
+IYellow="\[\033[0;93m\]"      # Yellow
+IBlue="\[\033[0;94m\]"        # Blue
+IPurple="\[\033[0;95m\]"      # Purple
+ICyan="\[\033[0;96m\]"        # Cyan
+IWhite="\[\033[0;97m\]"       # White
+
+# Bold High Intensity
+BIBlack="\[\033[1;90m\]"      # Black
+BIRed="\[\033[1;91m\]"        # Red
+BIGreen="\[\033[1;92m\]"      # Green
+BIYellow="\[\033[1;93m\]"     # Yellow
+BIBlue="\[\033[1;94m\]"       # Blue
+BIPurple="\[\033[1;95m\]"     # Purple
+BICyan="\[\033[1;96m\]"       # Cyan
+BIWhite="\[\033[1;97m\]"      # White
+
+# High Intensity backgrounds
+On_IBlack="\[\033[0;100m\]"   # Black
+On_IRed="\[\033[0;101m\]"     # Red
+On_IGreen="\[\033[0;102m\]"   # Green
+On_IYellow="\[\033[0;103m\]"  # Yellow
+On_IBlue="\[\033[0;104m\]"    # Blue
+On_IPurple="\[\033[10;95m\]"  # Purple
+On_ICyan="\[\033[0;106m\]"    # Cyan
+On_IWhite="\[\033[0;107m\]"   # White
+
+# git clone https://github.com/magicmonty/bash-git-prompt.git ~/.bash-git-prompt --depth=1
+if [ -f "$HOME/.bash-git-prompt/gitprompt.sh" ]; then
+    GIT_PROMPT_ONLY_IN_REPO=1
+    source "$HOME/.bash-git-prompt/gitprompt.sh"
+fi
+
+if test $UID = 0;
+then
+        USER_PROMPT=$BIRed
+        ENTER_CMD=#
+else
+        ENTER_CMD=$
+fi
+
+export PS1=$USER_PROMPT\\u@$Purple\\h:' '$Blue\\W$Color_Off' '$ENTER_CMD' '
+
+#
+# nearly no known program needs $TERMCAP - 'Slang'-programs get confused
+# with a set $TERMCAP -> unset it.
+# unset TERMCAP
+
+# Some programs support several languages for their output.
+# If you want them to use german, please uncomment the following line.
+#export LANG=de_DE.ISO-8859-1
+
+
+#
+# try to set DISPLAY smart (from Hans) :)
+#
+if test -z "$DISPLAY" -a "$TERM" = "xterm" -a -x /usr/bin/who ; then
+    WHOAMI="`/usr/bin/who am i`"
+    _DISPLAY="`expr "$WHOAMI" : '.*(\([^\.][^\.]*\).*)'`:0.0"
+    if [ "${_DISPLAY}" != ":0:0.0" -a "${_DISPLAY}" != " :0.0" \
+         -a "${_DISPLAY}" != ":0.0" ]; then
+        export DISPLAY="${_DISPLAY}";
+    fi
+    unset WHOAMI _DISPLAY
+fi
+
+
+test -e ~/.bash_aliases && . ~/.bash_aliases
+
+set -o vi
+set -o noclobber
+
+export DISPLAY LESS PS1 PS2
+umask 022
+
+case $- in
+    *i*)	# interactive shell, do all my stuff
+	function pathfunc
+	{
+		$cmd "${@}" ;
+		if [ ${#@} -gt 3 ]
+		then
+			echo  -n ']2;[' $cmd $1 $2 $3 . . . ']' "`hostname`:$PWD"
+		else
+			echo -n ']2;' "`hostname `:$PWD"
+		fi
+	}
+	typeset -fx pathfunc
+
+	function vifunc
+	{
+		if [ ${#@} -gt 3 ]
+		then
+			echo  -n ']2;[' $cmd $1 $2 $3 . . . ']' "`hostname`:$PWD"
+		else
+			echo  -n ']2;[' $cmd ${@} ']' "`hostname`:$PWD"
+		fi
+		$cmd ${@} ;
+	}
+	typeset -fx vifunc
+
+	if [ "$TERM" = xterm -o "$TERM" = "xterm-color" ]
+	then
+	#		PS1=`hostname -s`'/$LOGNAME : `basename $PWD` : > 'a
+	#  PS1=']2;'`hostname`':$PWD'`hostname`'/speed> '
+	#  alias -x vi="cmd=vi vifunc"
+	    alias cd="cmd=cd pathfunc"
+	    alias more="cmd=more vifunc"
+	else
+	    :
+	    #  PS1="`hostname`/$PWD > "
+	    #		PS1=`hostname`'/$LOGNAME : $PWD : > '
+	fi
+
+	set -o ignoreeof
+	ulimit -c unlimited
+
+	cd .
+	;;
+*)	# non-interactive shell, so I don't really need any of the above
+	;;
+esac
+
+eval `dircolors $HOME/.dircolors`
+export CDPATH=.:$HOME:$HOME/Projects
+
+PATH=.:$HOME/.local/bin:$PATH
+
+export LS_OPTIONS="--color=tty -F -T 0"
+export INFODIR=/usr/share/info:/opt/gnome/info:/opt/gnome/share/info:/usr/lib/info:/usr/share/texmf/teTeX/info
+
+export HISTCONTROL=erasedups
+
+# git clone https://github.com/juven/maven-bash-completion.git
+# copy bash_completion_bash to ~/.bash_completion.d
+
+if [[ -d $HOME/.bash_completion.d/ ]]; then
+	for file in $HOME/.bash_completion.d/* ; do
+		# shellcheck source=/dev/null
+		source "$file"
+	done
+fi
+
+export MAKEFILES=$HOME/Makefile
+
+# Babashka
+_bb_tasks() {
+    COMPREPLY=( $(compgen -W "$(bb tasks |tail -n +3 |cut -f1 -d ' ')" -- ${COMP_WORDS[COMP_CWORD]}) );
+}
+# autocomplete filenames as well
+complete -f -F _bb_tasks bb
+
+# if I have anything that is specific to this machine, add it now
+test -e ~/.bash_aliases_local && . ~/.bash_aliases_local
+# vim: ts=8 sw=4

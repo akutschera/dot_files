@@ -1,0 +1,13 @@
+.classpath
+.project
+.settings
+.idea
+.gradle
+target
+*.iml
+ak_*
+*~
+.nrepl-port
+.projectile
+.clj-kondo
+.lsp

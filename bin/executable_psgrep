@@ -1,0 +1,35 @@
+#! /bin/sh
+#
+#
+
+Usage()
+{
+	echo "Usage: $_cmd [-h] [-p]"
+	echo "-h		: display this help text"
+	echo "-p		: show parent Pid"
+	exit 0
+}
+
+GetOpts()
+{
+	_opts=axuwwwwww
+	_shift=0;
+	while getopts hp i
+	do
+			case $i in
+					h) Usage;;
+					p) _opts=axjwwwww;
+						_shift=1;;
+					*) echo "unknown option $i"
+							Usage;;
+			esac
+	done
+	return $_shift
+}
+
+GetOpts $*
+# remove any extra args that I don't need anymore
+shift $?
+ps $_opts |grep $*|grep -v grep
+
+# vi: ts=2 sw=2

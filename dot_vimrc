@@ -1,0 +1,86 @@
+" sometime I have special syntax highlighting, e.g. for log files
+" so, load my personal syntax settings
+	let myfiletypefile = "$HOME/.vim/myfiletypes.vim"
+	:	filetype on
+let mysyntaxfile = "$HOME/.vim/mysyntax.vim"
+syntax on
+filetype plugin indent on
+
+let g:rainbow_active = 1 "set to 0 if you want to enable it later via :RainbowToggle
+colorscheme github
+
+" format: settings, abbreviations, mappings, autocommands
+:se nocompatible
+:se exrc
+" I don't want autocommands to execute something that chenges files on my disk
+:se secure
+" updatecount, I don't want swap files
+:se uc=0
+" for case insensitive searching
+:se ignorecase
+:se smartcase
+" I alwas want to know line and colum numbers
+:se ru
+" so I can use the mouse when I want to
+:se mouse=nv
+" to save searches across vim runs
+:se viminfo='10
+" for substitution (set it to global by default)
+:se gdefault
+:se smarttab
+:se expandtab
+" for mappings before they are expanded
+:se timeoutlen=400
+" highlight what I searched for
+set hlsearch
+" don't make noise
+:se visualbell
+"
+" MAPPINGS
+"
+" I want to search the current word with a single keystroke
+" on my keyboard '*' needs an extra shift key
+:if &smartcase == 1
+:  noremap + :norm m`/<c-r>="\\\<".expand("<cword>")."\\\>"<cr><c-v><cr>``<cr>n
+:  noremap # :norm m`?<c-r>="\\\<".expand("<cword>")."\\\>"<cr><c-v><cr>``<cr>n
+:else
+:  noremap * +
+:endif
+" move to wherever the current file is
+:map ,cd :cd %:p:h<CR>
+"
+" lazy typing
+:map bu :buffers<CR>
+" use tselect
+:noremap tt z
+:noremap <C-]> :tselect <C-R> expand("<cword>")<CR><CR>
+" go to next buffer, one key less to type
+:map nb :n<CR>n
+"
+" map function keys
+:map <F1> :w!<CR>
+:map <F2> :make<CR>
+":map <S-F2> :cd .. \| make \| cd -<CR>
+:map <F3> :se hls!<CR>
+" toggle case of the whole word
+:map <F4> g~iw
+:vmap <F4> g~
+:map <Home> :0<CR>
+:map <End> G
+"
+"
+" for quickfix-mode
+:map <Right> :cn<CR>
+:map <Left> :cp<CR>
+" for tcsh-like filename completions
+":cnoremap <Tab> <C-l><C-d>
+" cw removes spaces after the word
+:cnoremap cw dwi
+"
+" AUTOCOMMANDS
+:so $HOME/.vim/autocmd.vim
+
+" load bundles from $HOME/.vim/bundles
+execute pathogen#infect()
+
+:se nrformats=bin,octal,hex,alpha

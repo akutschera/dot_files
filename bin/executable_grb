@@ -1,0 +1,11 @@
+#! /bin/bash
+
+# rebases the current git branch onto main
+# pull main first so main is also up-to-date
+git stash
+BRANCH=$(git branch | awk '/^*/ { print $2}')
+git checkout main
+git fetch upstream
+git rebase upstream/main
+git checkout $(BRANCH)
+git stash pop

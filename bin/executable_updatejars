@@ -1,0 +1,18 @@
+#! /bin/bash
+
+# create a list of all classes that I have in my maven repo
+cd $HOME/Java
+OUTFILE=alljars.txt
+/bin/rm $OUTFILE
+for file in `locate jar | grep "$HOME/.m2/repository" | grep "\.jar$"`
+do
+    if [  -f "$file" ]; then
+	echo "__NEWFILE: $file" >> $OUTFILE.new
+	jar tvf $file >> $OUTFILE.new
+    fi
+done
+if [ -f "$OUTFILE.new" ]; then
+    /bin/mv $OUTFILE.new $OUTFILE
+fi
+
+# vim: ts=8 sw=4

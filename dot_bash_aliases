@@ -1,0 +1,34 @@
+# aliases
+# alias ls='/bin/ls --color=tty -F -T 0'
+alias ls='/bin/ls $LS_OPTIONS'
+alias l='/bin/ls -l $LS_OPTIONS'
+alias h='history'
+alias mv='mv -i'
+alias rm='rm -i'
+alias cp='cp -i'
+alias copy='cp -i'
+alias mci='mvn clean install'
+alias mdt='mvn dependency:tree | vim -'
+
+# aliases for typos
+alias amke='make'
+alias mroe='more'
+alias grpe='grep'
+alias lcoate='locate'
+
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias -- -="cd -"
+
+# Korn shell, anyone?
+function kcdfunc
+{
+	cd `pwd | sed "s/$1/$2/"`
+}
+typeset -fx kcdfunc
+alias kcd="kcdfunc"
+
+alias defmake="MAKEFILES=$HOME/Makefile.default make"
+
+alias grepr='/usr/bin/rgrep --exclude-dir=".clj-kondo" --exclude-dir=".lsp" --exclude-dir="node_modules" --exclude-dir=".cpcache" '
