@@ -1,0 +1,13 @@
+[core]
+	autocrlf = input
+[merge]
+	tool = vimdiff
+        renamelimit = 3000
+[mergetool]
+	keepBackup = false
+[push]
+	default = simple
+[alias]
+        hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
+[init]
+	defaultBranch = main
