@@ -1,0 +1,14 @@
+<templateSet group="AKK">
+  <template name="aT" value="org.assertj.core.api.Assertions.assertThat( $COND$ ).$END$" description="assertThat" toReformat="true" toShortenFQNames="true">
+    <variable name="COND" expression="" defaultValue="" alwaysStopAt="true" />
+    <context>
+      <option name="KOTLIN" value="true" />
+    </context>
+  </template>
+  <template name="xxx" value="@org.junit.jupiter.api.Test&#10;fun `$NAME$`() {&#10;    $END$&#10;}" description="" toReformat="false" toShortenFQNames="true">
+    <variable name="NAME" expression="" defaultValue="" alwaysStopAt="true" />
+    <context>
+      <option name="KOTLIN" value="true" />
+    </context>
+  </template>
+</templateSet>

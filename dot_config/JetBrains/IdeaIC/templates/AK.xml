@@ -1,0 +1,38 @@
+<templateSet group="AK">
+  <template name="sbt" value="@org.springframework.boot.test.context.SpringBootTest" description="Run With SpringJUnitRunner" toReformat="true" toShortenFQNames="true" useStaticImport="true">
+    <context>
+      <option name="JAVA_CODE" value="true" />
+      <option name="JAVA_STATEMENT" value="false" />
+    </context>
+  </template>
+  <template name="rwm" value="@org.junit.jupiter.api.extension.ExtendWith( org.mockito.junit.jupiter.MockitoExtension )" description="Run with Mockito" toReformat="true" toShortenFQNames="true" useStaticImport="true">
+    <context>
+      <option name="JAVA_DECLARATION" value="true" />
+    </context>
+  </template>
+  <template name="aT" value="org.assertj.core.api.Assertions.assertThat( $SELECTION$$CODE$ ).$END$" description="assertThat" toReformat="false" toShortenFQNames="true" useStaticImport="true">
+    <variable name="CODE" expression="" defaultValue="" alwaysStopAt="true" />
+    <context>
+      <option name="JAVA_STATEMENT" value="true" />
+    </context>
+  </template>
+  <template name="xxx" value="@org.junit.jupiter.api.Test&#10;void $NAME$() {&#10;    $END$&#10;}" description="add junit5 test" toReformat="false" toShortenFQNames="true">
+    <variable name="NAME" expression="" defaultValue="" alwaysStopAt="true" />
+    <context>
+      <option name="JAVA_CODE" value="true" />
+    </context>
+  </template>
+  <template name="sas" value="var softly = new org.assertj.core.api.SoftAssertions();&#10;softly.assertThat($NAME$).$END$&#10;softly.assertAll();" description="softassertions" toReformat="false" toShortenFQNames="true" useStaticImport="true">
+    <variable name="NAME" expression="" defaultValue="" alwaysStopAt="true" />
+    <context>
+      <option name="JAVA_STATEMENT" value="true" />
+    </context>
+  </template>
+  <template name="twf" value="@com.github.nylle.javafixture.annotations.fixture.TestWithFixture&#10;void $NAME$($FIXTURE$) {&#10;    $END$&#10;}" description="add junit5 test with fixture" toReformat="false" toShortenFQNames="true">
+    <variable name="NAME" expression="" defaultValue="" alwaysStopAt="true" />
+    <variable name="FIXTURE" expression="" defaultValue="" alwaysStopAt="true" />
+    <context>
+      <option name="JAVA_CODE" value="true" />
+    </context>
+  </template>
+</templateSet>
