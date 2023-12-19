@@ -89,12 +89,9 @@ fi
 if test $UID = 0;
 then
         USER_PROMPT=$BIRed
-        ENTER_CMD=#
-else
-        ENTER_CMD=$
 fi
 
-export PS1=$USER_PROMPT\\u@$Purple\\h:' '$Blue\\W$Color_Off' '$ENTER_CMD' '
+export PS1=$USER_PROMPT\\u@$Purple\\h:' '$Blue\\W$Color_Off' \$ '
 
 #
 # nearly no known program needs $TERMCAP - 'Slang'-programs get confused
