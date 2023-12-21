@@ -88,10 +88,10 @@ fi
 
 if test $UID = 0;
 then
-        USER_PROMPT=$BIRed
+        USER_PROMPT=$On_Red
 fi
 
-export PS1=$USER_PROMPT\\u@$Purple\\h:' '$Blue\\W$Color_Off' \$ '
+export PS1=$USER_PROMPT\\u$Purple@\\h:' '$Blue\\W$Color_Off' \$ '
 
 #
 # nearly no known program needs $TERMCAP - 'Slang'-programs get confused
