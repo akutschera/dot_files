@@ -1,0 +1,7 @@
+# some extra stuff that makes my life a little easier
+# NB: check, if the versions are still up to date
+BABASHKA_VERSION=1.3.186
+BBIN_VERSION=0.2.1
+echo curl -o $HOME/bin/bb https://github.com/babashka/babashka/releases/download/v${BABASHKA_VERSION}/babashka-${BABASHKA_VERSION}-linux-amd64-static.tar.gz
+echo curl -o- -L https://raw.githubusercontent.com/babashka/bbin/v${BBIN_VERSION}/bbin '> ~/.local/bin/bbin && chmod +x ~/.local/bin/bbin'
+echo bbin install bbang
