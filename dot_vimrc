@@ -7,6 +7,15 @@ syntax on
 filetype plugin indent on
 
 let g:rainbow_active = 1 "set to 0 if you want to enable it later via :RainbowToggle
+
+" Plugins ('vim-plug')
+call plug#begin('~/.vim/plugged')
+
+" Declare the list of plugins.
+Plug 'cormacrelf/vim-colors-github'
+
+call plug#end()
+
 colorscheme github
 
 " format: settings, abbreviations, mappings, autocommands
@@ -81,6 +90,6 @@ set hlsearch
 :so $HOME/.vim/autocmd.vim
 
 " load bundles from $HOME/.vim/bundles
-execute pathogen#infect()
+" execute pathogen#infect()
 
 :se nrformats=bin,octal,hex,alpha

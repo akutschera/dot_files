@@ -37,7 +37,7 @@ case `file -b $choice | awk '/^/ { print $1 }'` in
 	gzip)
 #		_outfile=`echo $_out | sed 's/.gz$//'`
 #		echo "gonna write to $_outfile"
-		zcat $choice | nroff -man | sed 's/.//g' | vim -
+		zcat $choice | nroff -man | sed 's/.//g' | sed 's/.\[[[:digit:]]\+m//g' | sed 's+\x1b[^\x1b]*\x1b\\++g' | vim -
 		;;
 	troff)
 #		_outfile=`echo $_out | sed 's/.gz$//'`
