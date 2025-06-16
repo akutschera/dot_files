@@ -8,16 +8,6 @@ filetype plugin indent on
 
 let g:rainbow_active = 1 "set to 0 if you want to enable it later via :RainbowToggle
 
-" Plugins ('vim-plug')
-call plug#begin('~/.vim/plugged')
-
-" Declare the list of plugins.
-Plug 'cormacrelf/vim-colors-github'
-
-call plug#end()
-
-colorscheme github
-
 " format: settings, abbreviations, mappings, autocommands
 :se nocompatible
 :se exrc
