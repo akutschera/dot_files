@@ -194,6 +194,7 @@ if [[ -d $HOME/.bash_completion.d/ ]]; then
 fi
 
 export MAKEFILES=$HOME/Makefile
+export XDG_CONFIG_HOME=$HOME/.config
 
 # Babashka
 _bb_tasks() {
